@@ -1,16 +1,22 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vk_tech_donation/models/donation.dart';
+import 'package:vk_tech_donation/pages/detail.dart';
+import 'package:vk_tech_donation/pages/post.dart';
 import 'package:vk_tech_donation/widgets/button.dart';
 import 'package:vk_tech_donation/widgets/image.dart';
+import 'package:vk_tech_donation/widgets/select.dart';
 import 'package:vk_tech_donation/widgets/text-field.dart';
 import 'package:vk_tech_donation/widgets/upmenu.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CollectPage extends StatefulWidget {
   String title;
+  EDonationType type;
 
-  CollectPage({this.title});
+  CollectPage({this.title, this.type});
   @override
   _CollectPageState createState() => _CollectPageState();
 }
@@ -25,12 +31,6 @@ class _CollectPageState extends State<CollectPage> {
   String desc = "";
 
   bool isActive() {
-    print(123);
-    print(this.name != "");
-    print(this.summa != "");
-    print(this.goal != "");
-    print(this.desc != "");
-
     return name != "" &&
         summa != "" &&
         goal != "" &&
@@ -62,6 +62,7 @@ class _CollectPageState extends State<CollectPage> {
         hint: "Название сбора",
       ),
       TextFieldWidget(
+        type: TextInputType.number,
         field: "Сумма, ₽",
         onChange: (value) => setState(() => summa = value),
         hint: "Название сбора",
@@ -77,63 +78,55 @@ class _CollectPageState extends State<CollectPage> {
         hint: "На что пойдут деньги и как они кому-то помогут?",
       ),
       SizedBox(height: 13),
-      Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        child: Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            "Куда получать деньги",
-            style: TextStyle(
-              color: Color(0xFF6D7885),
-              fontSize: 14,
-            ),
-          ),
-        ),
-      ),
-      SizedBox(height: 8),
-      Container(
-        margin: EdgeInsets.symmetric(horizontal: 12),
-        child: DropdownButtonFormField(
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-          ),
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Color(0xFFF2F3F5),
-            alignLabelWithHint: true,
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 0.5,
-                color: Colors.black.withOpacity(0.12),
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            focusColor: Color(0xFF4986CC),
-          ),
-          isExpanded: true,
-          icon: Icon(Icons.keyboard_arrow_down),
-          onChanged: (e) {},
-          value: "Счёт VK Pay · 1234",
-          items: [
-            DropdownMenuItem(
-              value: "Счёт VK Pay · 1234",
-              child: Text("Счёт VK Pay · 1234"),
-            )
-          ],
-        ),
-      ),
+      SelectWidget(value: "Счёт VK Pay · 1234", title: "Куда получать деньги"),
       SizedBox(height: 24),
       Container(
         margin: EdgeInsets.symmetric(horizontal: 12),
         child: Button(
-          onClick: () {},
+          onClick: () {
+            if (widget.type == EDonationType.OnceDonation) {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => DetailPage(
+                    donation: OnceDonation(
+                      type: EDonationType.OnceDonation,
+                      image: image,
+                      name: name,
+                      summa: int.parse(summa),
+                      goal: goal,
+                      description: desc,
+                      alreadyRiched: 0,
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => PostPage(
+                    donation: RegularDonation(
+                      type: EDonationType.RegularDonation,
+                      image: image,
+                      name: name,
+                      summa: int.parse(summa),
+                      goal: goal,
+                      description: desc,
+                      alreadyRiched: 0,
+                    ),
+                  ),
+                ),
+              );
+            }
+          },
           text: "Далее",
           height: 44,
           fontSize: 17,
           enable: isActive(),
         ),
       ),
+      SizedBox(height: 12),
     ];
   }
 

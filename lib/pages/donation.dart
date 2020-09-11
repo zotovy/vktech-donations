@@ -23,6 +23,7 @@ class DonationPage extends StatelessWidget {
         onClick: () => Navigator.push(
           context,
           CupertinoPageRoute(
+            settings: RouteSettings(name: "donation"),
             builder: (_) => TypePage(),
           ),
         ),

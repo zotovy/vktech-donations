@@ -4,11 +4,13 @@ class TextFieldWidget extends StatelessWidget {
   String field;
   Function onChange;
   String hint;
+  TextInputType type;
 
   TextFieldWidget({
     this.field,
     this.onChange,
     this.hint,
+    this.type,
   });
 
   @override
@@ -28,6 +30,7 @@ class TextFieldWidget extends StatelessWidget {
           ),
           SizedBox(height: 8),
           TextFormField(
+            keyboardType: this.type,
             onChanged: this.onChange,
             style: TextStyle(
               color: Colors.black,

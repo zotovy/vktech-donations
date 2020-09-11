@@ -22,13 +22,16 @@ class UpMenu extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 12),
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            bottom: BorderSide(
-              color: Color(0xFFD7D8D9),
-              width: 0.33,
-            ),
-          )),
+        color: Colors.white,
+        border: needUnderline
+            ? Border(
+                bottom: BorderSide(
+                  color: Color(0xFFD7D8D9),
+                  width: 0.33,
+                ),
+              )
+            : null,
+      ),
       child: Stack(
         children: <Widget>[
           // Back

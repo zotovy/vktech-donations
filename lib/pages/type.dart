@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vk_tech_donation/models/donation.dart';
 import 'package:vk_tech_donation/pages/collect.dart';
 import 'package:vk_tech_donation/widgets/big-button.dart';
 import 'package:vk_tech_donation/widgets/upmenu.dart';
@@ -16,6 +17,7 @@ class TypePage extends StatelessWidget {
           CupertinoPageRoute(
             builder: (_) => CollectPage(
               title: "Целевой сбор",
+              type: EDonationType.OnceDonation,
             ),
           ),
         ),
@@ -27,7 +29,10 @@ class TypePage extends StatelessWidget {
         onTap: () => Navigator.push(
           context,
           CupertinoPageRoute(
-            builder: (_) => CollectPage(title: "Регулярный сбор"),
+            builder: (_) => CollectPage(
+              title: "Регулярный сбор",
+              type: EDonationType.RegularDonation,
+            ),
           ),
         ),
       ),
