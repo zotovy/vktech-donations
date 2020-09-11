@@ -1,12 +1,25 @@
-import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class DonationCard extends StatelessWidget {
-  dynamic donation;
-  Function onClick;
+class DonationCard extends StatefulWidget {
+  @override
+  _DonationCardState createState() => _DonationCardState();
 
-  DonationCard({this.donation});
+  dynamic donation;
+  bool needClick;
+
+  DonationCard({this.donation, this.needClick = false});
+}
+
+class _DonationCardState extends State<DonationCard> {
+  int alreadyRiched;
+
+  @override
+  void initState() {
+    super.initState();
+    this.alreadyRiched = widget.donation.alreadyRiched;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +52,7 @@ class DonationCard extends StatelessWidget {
                 topRight: Radius.circular(10),
               ),
               image: DecorationImage(
-                image: FileImage(donation.image),
+                image: FileImage(widget.donation.image),
                 fit: BoxFit.cover,
               ),
             ),
@@ -53,7 +66,7 @@ class DonationCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  this.donation.name,
+                  widget.donation.name,
                   style: TextStyle(
                     fontSize: 15,
                     color: Colors.black,
@@ -62,7 +75,7 @@ class DonationCard extends StatelessWidget {
                 ),
                 Text(
                   // "Матвей Подосуров · Активно",
-                  this.donation.author + " · " + this.donation.date,
+                  widget.donation.author + " · " + widget.donation.date,
                   style: TextStyle(
                     color: Color(0xFF818C99),
                     fontSize: 13,
@@ -83,16 +96,15 @@ class DonationCard extends StatelessWidget {
                           children: [
                             Text(
                               // "Помогите первым",
-                              this.donation.alreadyRiched > 0
-                                  ? this.donation.alreadyRiched
+                              this.alreadyRiched > 0
+                                  ? "Собрано ${this.alreadyRiched}₽ из ${widget.donation.summa}₽"
                                   : "Помогите первым",
                               style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.black,
                               ),
                             ),
-                            AnimatedContainer(
-                              duration: Duration(milliseconds: 500),
+                            Container(
                               margin: EdgeInsets.only(top: 8),
                               width: 237,
                               height: 4,
@@ -102,10 +114,13 @@ class DonationCard extends StatelessWidget {
                               ),
                               child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: Container(
+                                child: AnimatedContainer(
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+
                                   // width: 100,
-                                  width: this.donation.alreadyRiched /
-                                      this.donation.summa *
+                                  width: this.alreadyRiched /
+                                      widget.donation.summa *
                                       237,
                                   height: 4,
                                   decoration: BoxDecoration(
@@ -133,7 +148,15 @@ class DonationCard extends StatelessWidget {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              onTap: onClick,
+                              onTap: () {
+                                setState(() {
+                                  Random random = Random();
+                                  setState(() {
+                                    this.alreadyRiched =
+                                        random.nextInt(widget.donation.summa);
+                                  });
+                                });
+                              },
                               borderRadius: BorderRadius.circular(10),
                               child: Center(
                                 child: Text(
