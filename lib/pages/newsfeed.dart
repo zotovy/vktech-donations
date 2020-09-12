@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:vk_tech_donation/pages/detail-complete.dart';
 import 'package:vk_tech_donation/widgets/card.dart';
 import 'package:vk_tech_donation/widgets/post.dart';
 
@@ -22,8 +24,18 @@ class NewsFeed extends StatelessWidget {
         who: donation.author,
         avatarPath: "assets/image/avatar-3.jpg",
         text: donation.post,
-        content: DonationCard(
-          donation: this.donation,
+        content: GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            CupertinoPageRoute(
+              builder: (_) => DetailCompletePage(
+                donation: donation,
+              ),
+            ),
+          ),
+          child: DonationCard(
+            donation: this.donation,
+          ),
         ),
       ),
       Post(

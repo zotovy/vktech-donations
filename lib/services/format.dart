@@ -13,4 +13,22 @@ class FormatServices {
 
     return "$day.$month.${date.year}";
   }
+
+  String getMonth(int index) {
+    List<String> month = [
+      "Январе",
+      "Феврале",
+      "Марте",
+      "Апреле",
+      "Июне",
+      "Июле",
+      "Августе",
+      "Сентябре",
+      "Октябре",
+      "Ноябре",
+      "Декабре"
+    ];
+
+    return month[index];
+  }
 }
