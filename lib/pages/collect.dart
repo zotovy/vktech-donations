@@ -79,6 +79,13 @@ class _CollectPageState extends State<CollectPage> {
       ),
       SizedBox(height: 13),
       SelectWidget(value: "Счёт VK Pay · 1234", title: "Куда получать деньги"),
+      SizedBox(height: 13),
+      widget.type == EDonationType.RegularDonation
+          ? SelectWidget(
+              title: "Автор",
+              value: "Матвей Правосудов",
+            )
+          : SizedBox.shrink(),
       SizedBox(height: 24),
       Container(
         margin: EdgeInsets.symmetric(horizontal: 12),
@@ -114,6 +121,7 @@ class _CollectPageState extends State<CollectPage> {
                       goal: goal,
                       description: desc,
                       alreadyRiched: 0,
+                      author: "Матвей Правосудов",
                     ),
                   ),
                 ),

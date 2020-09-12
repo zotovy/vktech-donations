@@ -172,7 +172,7 @@ class _DetailCompletePageState extends State<DetailCompletePage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Нужно собрать ${widget.donation.type == EDonationType.RegularDonation ? "в " + formatServices.getMonth(DateTime.now().month - 1) : widget.donation.whenFinished == EDonFinishWhen.WhenRich ? "" : "до " + formatServices.formatDate(widget.donation.whenFinished)}",
+              "Нужно собрать ${widget.donation.type == EDonationType.RegularDonation ? "в " + formatServices.getMonth(DateTime.now().month - 1) : widget.donation.whenFinished == EDonFinishWhen.WhenRich ? "" : "до " + formatServices.formatDate(widget.donation.finishedWhen)}",
               style: TextStyle(
                 fontSize: 14,
                 color: Color(0xFF818C99),
@@ -180,7 +180,7 @@ class _DetailCompletePageState extends State<DetailCompletePage> {
             ),
             this.alreadyRiched / widget.donation.summa >= 0.8
                 ? Text(
-                    this.alreadyRiched.toString() + "₽",
+                    widget.donation.summa.toString() + "₽",
                     style: TextStyle(
                       color: Color(0xFF818C99),
                     ),
@@ -224,7 +224,7 @@ class _DetailCompletePageState extends State<DetailCompletePage> {
             Container(
               width: this.alreadyRiched /
                   widget.donation.summa *
-                  (MediaQuery.of(context).size.width - 32),
+                  (MediaQuery.of(context).size.width - 24),
               height: 24,
               decoration: BoxDecoration(
                 color: Color(0xFF4BB34B),
@@ -278,7 +278,7 @@ class _DetailCompletePageState extends State<DetailCompletePage> {
       Container(
         margin: EdgeInsets.symmetric(horizontal: 12),
         child: Text(
-          widget.donation.description,
+          widget.donation.goal + "\n" + widget.donation.description,
           style: TextStyle(fontSize: 15),
         ),
       ),
@@ -428,7 +428,7 @@ class _DetailCompletePageState extends State<DetailCompletePage> {
                               Random random = Random();
                               setState(() {
                                 this.alreadyRiched =
-                                    random.nextInt(widget.donation.summa);
+                                    random.nextInt(widget.donation.summa + 1);
                               });
                             });
                           },

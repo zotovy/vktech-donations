@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:vk_tech_donation/models/donation.dart';
 
 class DonationCard extends StatefulWidget {
   @override
@@ -75,7 +76,11 @@ class _DonationCardState extends State<DonationCard> {
                 ),
                 Text(
                   // "Матвей Подосуров · Активно",
-                  widget.donation.author + " · " + widget.donation.date,
+                  widget.donation.author +
+                      " · " +
+                      (widget.donation.type == EDonationType.RegularDonation
+                          ? "Помощь нужна каждый месяц"
+                          : widget.donation.date),
                   style: TextStyle(
                     color: Color(0xFF818C99),
                     fontSize: 13,

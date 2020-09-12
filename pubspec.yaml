@@ -1,5 +1,5 @@
-name: vk_tech_donation
-description: A new Flutter project.
+name: VK TECH Donation
+description: VK app for hackaton
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -30,6 +30,12 @@ dependencies:
     flutter_svg: ^0.18.1
     dotted_border: ^1.0.6
     image_picker: ^0.6.7+7
+    flutter_launcher_icons: "^0.7.3"
+
+flutter_icons:
+    android: "launcher_icon"
+    ios: true
+    image_path: "assets/icon.png"
 
 dev_dependencies:
     flutter_test:
